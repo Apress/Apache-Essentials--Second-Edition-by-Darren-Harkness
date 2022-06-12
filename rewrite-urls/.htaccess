@@ -1,0 +1,27 @@
+<IfModule mod_rewrite.c>
+    # Turns the Rewrite module on in Apache. It’s off by default
+    # for performance reasons.
+    RewriteEngine On
+
+    # Apache will always treat a training slash as a folder request
+    # and will return a 404, even if URL rewriting is available.
+    # This section checks to see if a file or directory exists first,
+    # and then removes the slash if one doesn’t exist.
+    RewriteCond %{REQUEST_FILENAME} !-d
+    RewriteCond %{REQUEST_URI} (.+)/$
+    RewriteRule ^ %1 [L,R=301]
+
+    # Here’s the important part of the rewrite. Apache will take everything
+    # after the domain name and pass it along to index.php through the route
+    # parameter. For example, if the browser requests http://localhost/contact,
+    # Apache will quietly rewrite the URL as http://localhost/index.php?route=contact
+    #
+    # Before it does any of this, however, it will check to see if a file or
+    # directory already exists with the requested name. This is critical for assets
+    # like CSS, javascript, or image files used as part of the site’s output.
+
+    RewriteCond %{REQUEST_FILENAME} !-d
+    RewriteCond %{REQUEST_FILENAME} !-f
+    RewriteRule ^ /index.php?route= [L]
+
+</IfModule>
