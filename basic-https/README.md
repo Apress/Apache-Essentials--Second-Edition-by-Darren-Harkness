@@ -1,0 +1,1 @@
+A basic Apache setup is perfect for a local development environment. As soon as you make this environment open to the Internet, however, you need to secure it with HTTPS. We talked about this in more depth in Chapter 5 of Apache Essentials.
